@@ -947,6 +947,8 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      *
      * @throws NullPointerException if the specified key is null
      */
+//    get不需要加锁因为node中的k，v都被volatile修饰，保证了可见性
+//    table被volatile不能保证get操作的可见性，而是为了保证扩容过程中的可见性。
     public V get(Object key) {
         Node<K,V>[] tab; Node<K,V> e, p; int n, eh; K ek;
         int h = spread(key.hashCode());

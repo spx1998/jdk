@@ -624,7 +624,10 @@ public abstract class AbstractQueuedSynchronizer
         if (pred != null) {
             node.prev = pred;
             if (compareAndSetTail(pred, node)) {
-//                这里可以看到 是 a<-b; tail = b; a->b 的顺序，
+//                这里可以看到 代码是
+//                a<-b;
+//                tail = b;
+//                a->b 的顺序，
 //                在设置tail后，可能a->b的操作未完成，执行unparkSuccessor就找不到b，这是unparkSuccessor从后向前遍历的一个原因
                 pred.next = node;
                 return node;
